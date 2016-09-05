@@ -1,0 +1,33 @@
+{
+  "name": "ionic-ion-drawer",
+  "homepage": "https://github.com/driftyco/ionic-ion-drawer",
+  "authors": [
+    "Max Lynch <max@drifty.com>"
+  ],
+  "description": "Android style drawer menu for Ionic",
+  "main": "ionic.contrib.drawer.js",
+  "keywords": [
+    "ionic",
+    "html5",
+    "android",
+    "drawer"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "f8371544ad",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f8371544adb8876e0141e7f15692977c83eeca2b"
+  },
+  "_source": "https://github.com/brybott/ionic-ion-drawer.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/brybott/ionic-ion-drawer.git",
+  "_direct": true
+}

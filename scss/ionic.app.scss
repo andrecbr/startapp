@@ -1,0 +1,366 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+$light:                           #fff;
+$stable:                          #f8f8f8;
+$positive:                        #387ef5;
+$calm:                            #11c1f3;
+$balanced:                        #33cd5f;
+$energized:                       #ffc900;
+$assertive:                       #ef473a;
+$royal:                           #886aea;
+$dark:                            #444;
+
+$base-color:                      #777;
+
+$item-icon-font-size: 						24px;
+$item-divider-bg:									$light;
+$item-divider-color:							$positive;
+
+$bar-height:                      54px;
+
+$item-default-active-bg:					transparent;
+
+$item-calm-bg:										transparent;
+$item-calm-border:								transparent;
+$item-calm-text:									$calm;
+$item-calm-active-bg:							transparent;
+$item-calm-active-border:					transparent;
+
+$item-positive-bg:								transparent;
+$item-positive-border:						transparent;
+$item-positive-text:							$positive;
+$item-positive-active-bg:					transparent;
+$item-positive-active-border:			transparent;
+
+$button-bar-button-font-size:     12px;
+$button-bar-button-height:        24px;
+$button-bar-button-padding:       8px;
+
+$button-large-icon-size:          24px;
+
+$badge-font-weight:								500;
+$badge-border-radius:							.25em;
+$badge-font-size:									11px;
+$badge-stable-text:								lighten($dark, 20%);
+
+$popup-border-radius:             .25em;
+$popup-background-color:          #fff;
+$popup-width:                     305px;
+
+$input-label-color:								darken($stable, 35%);
+
+// ng-material-floating-button
+$main-color: 											$calm;
+$icons-font-size: 								24px;
+$border-distance: 								20px;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+@import "www/lib/ion-slides-tabs/src/scss/slidingTabs";
+
+
+
+/**
+ * Utils
+**/
+hr{	border-bottom: 0 none; opacity: .2 }
+
+.non-decoration{ text-decoration: none !important; }
+
+/*.vertical-middle{
+	.row, .scroll {
+	  height: 100%;
+	}
+}*/
+
+.icon{
+	&-4x{ font-size: 4rem; }
+	&-3x{ font-size: 3rem; }
+	&-2x{ font-size: 2rem; }
+}
+
+.default{	color: $base-color !important }
+
+.no-margin{
+	margin: 0 !important;
+	&-top{
+		margin-top: 0 !important;
+	}
+	&-right{
+		margin-right: 0 !important;
+	}
+	&-bottom{
+		margin-bottom: 0 !important;
+	}
+	&-left{
+		margin-left: 0 !important;
+	}
+	&-horizontal{
+		@extend .no-margin-left;
+		@extend .no-margin-right;
+	}
+}
+
+.no-padding{
+	padding: 0 !important;
+	&-top{
+		padding-top: 0 !important;
+	}
+	&-right{
+		padding-right: 0 !important;
+	}
+	&-bottom{
+		padding-bottom: 0 !important;
+	}
+	&-left{
+		padding-left: 0 !important;
+	}
+	&-horizontal{
+		@extend .no-padding-left;
+		@extend .no-padding-right;
+	}
+}
+
+.subtext { font-size: 11px; letter-spacing: 1px }
+
+.muted, a.muted, .subtext{ color: #767f8d; }
+
+.highlighted{ font-weight: 600 }
+
+
+
+/**
+ * Components
+**/
+
+
+
+// Navicon
+
+.ion-navicon, .ion-navicon:before, .ion-navicon:after {
+  font-size: 32px !important;
+  line-height: 32px !important;
+}
+
+
+
+// Popup
+.popup {
+  max-width: 85% !important;
+}
+.popup-head {
+	text-align: left !important;
+	border-bottom: 0 none !important;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.popup-title {
+	font-weight: 700 !important;
+	font-size: 17px !important;
+}
+.popup-body {
+	font-size: 15px !important;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.popup-buttons {
+	@include justify-content(flex-end);
+	padding-left: 20px;
+	padding-right: 20px;
+  .button {
+  	@include flex(0 1 auto);
+  	font-weight: 500;
+    text-transform: uppercase;
+    font-size: 90%;
+  }
+}
+.popup-container input{
+	border-bottom: 2px solid $input-border;
+	&:focus, &:active{
+		border-bottom-color: $positive;
+	}
+}
+
+
+
+
+// Items
+span.item-image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	overflow: hidden;
+}
+span.item-image:before {
+  content: attr(data-name);
+  line-height: 40px;
+  text-align: center;
+  font-size: 20px;
+  display: block;
+  color: #fff;
+  flex: 1;
+  height: 100%;
+}
+.menu.menu-left .item, .menu.menu-right .item, drawer .item { @include item-style($item-default-bg, $item-default-border, $base-color); }
+
+
+
+// Drawer
+drawer, .menu-left {
+	.item-icon-left {
+	  .icon {
+	    left: ceil( ($item-padding / 2.2) * 2);
+	  }
+	}
+	.item-complex .item-content,
+	.item-radio .item-content {
+	  padding: $item-padding $item-padding $item-padding $item-padding;
+	}
+	.item-complex.item-icon-left {
+	  .item-content {
+	    padding-left: ceil( ($item-padding * 3.5) + ($item-padding / 3.5) );
+	  }
+	}
+	.item.active,
+	.item.activated,
+	.item-complex.active .item-content,
+	.item-complex.activated .item-content,
+	.item .item-content.active,
+	.item .item-content.activated {
+		box-shadow: 4px 0 0 $calm inset;
+		color: $calm;
+	}
+}
+
+
+
+
+// Lists
+.list {
+	margin-bottom: 5px !important;
+}
+
+.card,
+.list-inset {
+  //margin: $content-padding $content-padding;
+}
+
+.list:not(.list-inset) .item{
+	border-left-width: 0 !important;
+	border-right-width: 0 !important;
+}
+
+.list.card{
+	//box-shadow: none;
+	overflow: visible;
+	.item:last-child{
+		/*box-shadow: 0 3px 2px -1px rgba(0, 0, 0, .15) !important;
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
+		border-bottom-color: $item-default-border;*/
+	}
+}
+
+.list-borderless .item, .item-borderless {
+  border-width: 0 !important;
+}
+
+
+
+// Cards
+.card-positive{	border-top: 4px solid $positive; }
+.card-stable{	border-top: 4px solid $input-label-color; }
+
+
+
+// Badges
+.badge {
+  padding: 1px 5px;
+  top: $item-padding + 2px !important;
+  right: $item-padding !important;
+  &-inline{
+  	position: static !important;
+  	display: inline-block !important;
+  }
+  &.pull-right{
+  	float: right !important;
+  }
+}
+
+
+
+// Popovers
+.popover{
+	.scroll-content{
+		overflow: visible !important;
+	}
+}
+ion-popover-view {
+  height: auto !important;
+}
+
+
+
+// Bars
+.bar-header {
+  border-bottom-width: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  &.has-tabs-top{
+    box-shadow: none;
+  }
+}
+.tabs-top .bar-header{
+  box-shadow: none;
+}
+
+
+
+// Swiper
+/*.swiper-slide.swiper-slide-active{
+	.tab-item.tab-item-active,
+	.tab-item.active,
+	.tab-item.activated{
+		margin-top: 0 !important;
+	}
+}
+
+.swiper-slide .item{
+	border-right-width: 0;
+	border-left-width: 0;
+}
+
+.swiper-container{
+	transform: translateX(5px);
+}*/
+
+
+.bar.bar-header .button:last-child{
+	width: 46px;
+	color: #fff;
+}
+
+
+
+.icon-top {
+  align-items: flex-start !important;
+  padding-top: $item-padding;
+}

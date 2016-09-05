@@ -1,0 +1,32 @@
+<ion-view view-title="Configurações">
+  <ion-content>
+    <div class="list card no-margin-horizontal no-margin-top">
+      <div class="item item-divider">
+        Acesso ao sistema
+      </div>
+      <div class="item item-icon-left item-text-wrap item-button-right item-borderless">
+        <i class="icon ion-code positive"></i>
+        Caminho do CGI
+        <p ng-cloak>http://www.employer.com/test.cgi</p>
+      </div>
+    </div>
+    <div class="list card no-margin-horizontal">
+      <div class="item item-divider">
+        Credenciais
+      </div>
+      <div class="item item-icon-left item-text-wrap item-borderless">
+        <i class="icon ion-person positive"></i>
+        Usuário
+        <p ng-cloak>admin</p>
+      </div>
+      <a class="item item-icon-left item-text-wrap" href="" ng-click="escanearCredenciais()">
+        <i class="icon ion-qr-scanner positive"></i>
+        Escanear novas credenciais
+      </a>
+      <a class="item item-icon-left item-text-wrap" href="" ng-click="doLogout()">
+        <i class="icon ion-power positive"></i>
+        Desconectar
+      </a>
+    </div>
+  </ion-content>
+</ion-view>
