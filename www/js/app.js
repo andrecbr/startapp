@@ -26,7 +26,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
-  //$ionicConfigProvider.scrolling.jsScrolling(false);
+  $ionicConfigProvider.scrolling.jsScrolling(false);
 
   $stateProvider
 
