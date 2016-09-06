@@ -23,24 +23,68 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('LoginCtrl', function($http) {
-  var vm = this;
+.controller('LoginCtrl', function($scope, $http, $timeout) {
+  /*
+  var tumblr = require('tumblr.js');
+  var client = tumblr.createClient({ consumer_key: 'ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT' });
+
+  // Make the request
+  client.blogPosts('nonsense-case.tumblr.com', function(err, resp) {
+    //console.log(resp.posts); // now we've got all kinds of posts
+  });
+  */
+
+  var vm = this,
+      //page = 1,
+      limit = 20,
+      offset = 0,
+      busy = false;
 
   vm.posts = [];
 
-  /*$http({
-    url: 'http://www.wookmark.com/api/json/popular/1.json?callback=JSON_CALLBACK',
-    method: 'GET',
-    dataType: 'jsonp'
-  }).success(function (response){
-    console.log(response);
-  })*/
+  vm.isBusy = function (){
+    return busy;
+  };
 
-  $http.jsonp('http://www.wookmark.com/api/json/popular?callback=JSON_CALLBACK')
-    .then(function (response){
-      vm.posts = response.data;
-      console.log(vm.posts);
-    });
+  /**
+   * browserify -r ./node_modules/tumblr.js/lib/tumblr.js:tumblr.js -o ./www/lib/tumblr.js
+  **/
+  vm.loadMore = function (reset){
+    busy = true;
+    /*$http.jsonp('http://www.wookmark.com/api/json/popular?callback=JSON_CALLBACK&page='+page)
+      .then(function (response){
+        vm.posts.push(...response.data);
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        busy = false;
+        page++;
+      });*/
+    if (reset){
+      offset = 0;
+      vm.posts = [];
+    }
+    $http.jsonp('https://api.tumblr.com/v2/blog/nonsense-case.tumblr.com/posts?limit='+limit+'&offset='+offset+'&api_key=ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT&callback=JSON_CALLBACK')
+      .then(function (response){
+        vm.posts.push(...response.data.response.posts);
+        busy = false;
+        offset += limit;
+      }, function (error){
+        $timeout(function (){
+          vm.loadMore(false);
+        }, 2000);
+      }).finally(function (){
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+  };
+
+  vm.refresh = function (){
+    vm.loadMore(true);
+  };
+
+  $scope.$on('$stateChangeSuccess', function() {
+    vm.loadMore(false);
+  });
+
 })
 
 .controller('BrowseCtrl', function($scope, $ionicSlideBoxDelegate, $timeout) {
