@@ -24,9 +24,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
 
   $ionicConfigProvider.scrolling.jsScrolling(false);
+
+  /*$httpProvider.defaults.useXDomain = true;
+  $httpProvider.defaults.withCredentials = true;
+  delete $httpProvider.defaults.headers.common["X-Requested-With"];*/
 
   $stateProvider
 
@@ -50,7 +54,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
     url: '/login',
     views: {
       'menuContent': {
-        templateUrl: 'templates/login.html'
+        templateUrl: 'templates/login.html',
+        controller: 'LoginCtrl as vm'
       }
     }
   })

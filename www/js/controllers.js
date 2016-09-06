@@ -23,6 +23,26 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
+.controller('LoginCtrl', function($http) {
+  var vm = this;
+
+  vm.posts = [];
+
+  /*$http({
+    url: 'http://www.wookmark.com/api/json/popular/1.json?callback=JSON_CALLBACK',
+    method: 'GET',
+    dataType: 'jsonp'
+  }).success(function (response){
+    console.log(response);
+  })*/
+
+  $http.jsonp('http://www.wookmark.com/api/json/popular?callback=JSON_CALLBACK')
+    .then(function (response){
+      vm.posts = response.data;
+      console.log(vm.posts);
+    });
+})
+
 .controller('BrowseCtrl', function($scope, $ionicSlideBoxDelegate, $timeout) {
   var vm = this;
 
