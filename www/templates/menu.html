@@ -1,15 +1,16 @@
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-light">
       <ion-nav-back-button>
       </ion-nav-back-button>
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        <button class="button button-icon button-clear button-positive ion-navicon" menu-toggle="left"></button>
       </ion-nav-buttons>
       <ion-nav-buttons side="right">
-        <button class="button button-icon ion-android-search"></button>
-        <!--<button class="button button-icon ion-android-more-vertical" menu-toggle="right"></button>-->
-        <button class="button button-clear button-light" ng-click="popover.show($event)">
+        <button class="button button-clear button-positive">
+          <i class="icon ion-android-search"></i>
+        </button>
+        <button class="button button-clear button-positive" ng-click="popover.show($event)">
           <i class="icon ion-android-more-vertical"></i>
         </button>
       </ion-nav-buttons>

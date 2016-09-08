@@ -6405,7 +6405,7 @@ button.item.item-button-right {
   padding-bottom: 8px;
   min-height: 30px;
   background-color: #fff;
-  color: #387ef5;
+  color: inherit;
   font-weight: 500; }
 
 .platform-ios .item-divider-platform,
@@ -9831,7 +9831,6 @@ ion-slide {
     height: auto;
     min-width: 100%; }
   .slidingTabs ul {
-    background-color: #387ef5;
     height: 48px; }
     .slidingTabs ul li {
       height: 48px;
@@ -9841,13 +9840,13 @@ ion-slide {
       margin: 0;
       padding: 0 12px 20px 12px;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
+      opacity: .4;
       -webkit-transition: color 0.25s ease-in-out;
       transition: color 0.25s ease-in-out;
       position: relative;
       overflow: hidden; }
       .slidingTabs ul li.tab-active {
-        color: #fff; }
+        opacity: 1; }
       .slidingTabs ul li .ink {
         display: block;
         position: absolute;
@@ -10019,6 +10018,12 @@ span.item-image:before {
   -moz-align-items: center;
   align-items: center; }
 
+.item-avatar,
+.item-avatar .item-content,
+.item-avatar-left,
+.item-avatar-left .item-content {
+  min-height: 72px !important; }
+
 drawer .item-icon-left .icon, .menu-left .item-icon-left .icon {
   left: 15px; }
 
@@ -10084,7 +10089,7 @@ ion-popover-view {
 
 .bar-header {
   border-bottom-width: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
   .bar-header.has-tabs-top {
     box-shadow: none; }
 
@@ -10108,9 +10113,10 @@ ion-popover-view {
 	transform: translateX(5px);
 }*/
 .bar.bar-header .button:last-child {
-  width: 46px;
-  color: #fff; }
+  width: 46px; }
 
-.icon-top {
-  align-items: flex-start !important;
-  padding-top: 16px; }
+.affix {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 5; }

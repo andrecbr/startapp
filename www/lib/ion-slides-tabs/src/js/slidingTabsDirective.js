@@ -20,11 +20,6 @@ var slidingTabsDirective = angular.module("ionic").directive('ionSlidesTabs', ['
 
             var init = function () {
 
-                var headerBars = document.querySelectorAll('ion-header-bar');
-                for(var i=0, len=headerBars.length; i<len; ++i){
-                    headerBars[i].classList.add('has-tabs-top');
-                }
-
                 if(angular.isDefined( attrs.slideTabsScrollable ) && attrs.slideTabsScrollable === "false" ) {
                     options.slideTabsScrollable = false;
                 }
@@ -266,6 +261,18 @@ var slidingTabsDirective = angular.module("ionic").directive('ionSlidesTabs', ['
             init();
         },
         controller: ['$scope',function($scope) {
+            $scope.$on("$ionicParentView.beforeEnter", function(){
+               var headerBars = document.querySelectorAll('ion-header-bar');
+                for(var i=0, len=headerBars.length; i<len; ++i){
+                    headerBars[i].classList.add('has-tabs-top');
+                }
+            });
+            $scope.$on("$ionicParentView.beforeLeave", function(){
+               var headerBars = document.querySelectorAll('ion-header-bar.has-tabs-top');
+                for(var i=0, len=headerBars.length; i<len; ++i){
+                    headerBars[i].classList.remove('has-tabs-top');
+                }
+            });
             this.addTab = function($content) {
                 $timeout(function() {
                     if($scope.addTabContent) {
