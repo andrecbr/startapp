@@ -262,13 +262,13 @@ var slidingTabsDirective = angular.module("ionic").directive('ionSlidesTabs', ['
         },
         controller: ['$scope',function($scope) {
             $scope.$on("$ionicParentView.beforeEnter", function(){
-               var headerBars = document.querySelectorAll('ion-header-bar');
+                var headerBars = document.querySelectorAll('ion-header-bar');
                 for(var i=0, len=headerBars.length; i<len; ++i){
                     headerBars[i].classList.add('has-tabs-top');
                 }
             });
             $scope.$on("$ionicParentView.beforeLeave", function(){
-               var headerBars = document.querySelectorAll('ion-header-bar.has-tabs-top');
+                var headerBars = document.querySelectorAll('ion-header-bar.has-tabs-top');
                 for(var i=0, len=headerBars.length; i<len; ++i){
                     headerBars[i].classList.remove('has-tabs-top');
                 }
