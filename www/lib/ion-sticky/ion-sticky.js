@@ -1,103 +1,217 @@
 angular.module('ion-sticky', ['ionic'])
-    .directive('ionSticky', ['$ionicPosition', '$compile', '$timeout', function ($ionicPosition, $compile, $timeout) {
+    .directive("onRepeatDone", function($timeout) {
+        return {
+            restriction: 'A',
+            link: function($scope, element, attributes) {
+                //console.log("onRepeatDone");
+                if ($scope.$last) {
+                    $scope.$emit("ng_repeat_done", element);
+                };
+            }
+        }
+    })
+    .directive('sticky', function($ionicScrollDelegate, $timeout, $interval, $compile) {
+        var options,
+            defaults = {
+                classes: {
+                    animated: 'item-animated',
+                    container: 'item-wrapper',
+                    hidden: 'item-hidden',
+                    stationaryHeader: 'item item-avatar item-text-center item-divider item-borderless header-affix fixed-top'
+                },
+                selectors: {
+                    groupContainer: 'item-container',
+                    groupHeader: 'item-divider',
+                    stationaryHeader: 'div'
+                }
+            };
+
         return {
             restrict: 'A',
-            require: '^$ionicScroll',
-            link: function ($scope, $element, $attr, $ionicScroll) {
-                var scroll = angular.element($ionicScroll.element);
-                var clone;
-                // creates the sticky clone and adds it to DOM
-                var createStickyClone = function ($element) {
-                    clone = $element.clone().css({
-                        position: 'absolute',
-                        top: $ionicPosition.position(scroll).top + "px",
-                        left: 0,
-                        right: 0
+            link: function(scope, element, attrs, ctrl) {
+                scope.container_el = attrs.delegateHandle;
+
+                scope.$watch(
+                    attrs.watchVariable,
+                    function handleModelChange(newValue) {
+                        //we run this in a loop so we check to ensure the list is fully rendered
+                        var stop = $interval(function() {
+                            if (scope.list_render_completed === true) {
+                                scope.list_render_completed = false;
+                                $timeout(function() {
+                                    console.log("updated list");
+                                    scope.updateItems();
+                                }, 500);
+                                $interval.cancel(stop);
+                            }
+                        });
+
+                    }
+                );
+                scope.$on('ng_repeat_done', function(domainElement) {
+                    scope.list_render_completed = true;
+                });
+
+                var items = [],
+                    options = angular.extend(defaults, attrs),
+                    $element = angular.element(element),
+                    $fakeHeader = angular.element('<div class="' + options.classes.stationaryHeader + '"/>');
+
+
+
+                scope.updateItems = function() {
+                    console.log("updateItems");
+                    var $groupContainer = angular.element($element[0].getElementsByClassName(options.selectors.groupContainer));
+
+                    $element.addClass('list-sticky');
+
+                    angular.element($element[0].getElementsByClassName('list')).addClass(options.classes.container);
+
+                    //$element.after($fakeHeader);
+                    $element.parent()[0].insertBefore($fakeHeader[0], $element[0]);
+                  
+
+                    items = [];
+                    angular.forEach($groupContainer, function(elem, index) {
+                        //console.log($groupContainer);
+                        var $tmp_list = $groupContainer.eq(index);
+
+                        var $tmp_listHeight = $tmp_list.prop('offsetHeight'),
+                            $tmp_listOffset = $tmp_list[0].getBoundingClientRect().top,
+                            $tmp_header = angular.element($tmp_list[0].getElementsByClassName(options.selectors.groupHeader)).eq(0);
+                        if ($tmp_header.text().indexOf("{{") == -1) //not found
+                            items.push({
+                            'list': $tmp_list,
+                            'header': $tmp_header,
+                            'listHeight': $tmp_listHeight,
+                            'headerText': $tmp_header.html(),
+                            'headerHeight': $tmp_header.prop('offsetHeight'),
+                            'listOffset': $tmp_listOffset,
+                            'listBottom': $tmp_listHeight + $tmp_listOffset
+                        });
                     });
 
-                    $attr.ionStickyClass = ($attr.ionStickyClass) ? $attr.ionStickyClass : 'assertive';
+                    $fakeHeader.html(items[0].headerText);
+                }
 
-                    clone[0].className += ' ' + $attr.ionStickyClass;
 
-                    clone.removeAttr('ng-repeat-start');
-                    clone.removeAttr('ng-if');
 
-                    scroll.parent().append(clone);
 
-                    // compile the clone so that anything in it is in Angular lifecycle.
-                    $compile(clone)($scope);
-                };
+                scope.checkPosition = function() {
+                    var i = 0,
+                        topElement, offscreenElement, topElementBottom,
+                        currentTop = $ionicScrollDelegate.$getByHandle(scope.container_el).getScrollPosition().top;
 
-                var removeStickyClone = function () {
-                    if (clone)
-                        clone.remove();
-                    clone = null;
-                };
+                    topElement = items[0];
 
-                $scope.$on("$destroy", function () {
-                    // remove the clone, unbind the scroll listener
-                    removeStickyClone();
-                    angular.element($ionicScroll.element).off('scroll');
-                });
+                    var delta = items[0].listOffset;
 
-                $scope.$on("$ionicParentView.beforeEnter", function(){
-                    var headerBars = document.querySelectorAll('ion-header-bar');
-                    for(var i=0, len=headerBars.length; i<len; ++i){
-                        headerBars[i].classList.add('has-tabs-top');
+                    //while ((items[i].listOffset - currentTop) <= 0) {
+                    while ((items[i].listOffset - currentTop) <= delta) {
+                        //while ((items[i].listOffset ) <= 50) {
+                        topElement = items[i];
+                        topElementBottom = -(topElement.listBottom - currentTop);
+
+                        if (topElementBottom < -topElement.headerHeight) {
+                            offscreenElement = topElement;
+                        }
+
+                        i++;
+
+                        if (i >= items.length) {
+                            i--;
+                            break;
+                        }
                     }
-                });
-                $scope.$on("$ionicParentView.beforeLeave", function(){
-                    var headerBars = document.querySelectorAll('ion-header-bar.has-tabs-top');
-                    for(var i=0, len=headerBars.length; i<len; ++i){
-                        headerBars[i].classList.remove('has-tabs-top');
-                    }
-                });
 
-                var lastActive;
-                var updateSticky = ionic.throttle(function() {
-                    var active = null,
-                        dividers = [],
-                        tmp = $element[0].getElementsByClassName("item-divider");
-
-                    for (var i = 0; i < tmp.length; ++i) dividers.push(angular.element(tmp[i]));
-                    if (dividers.length == 0) return;
-                    if (!clone) createStickyClone(angular.element(dividers[0][0]))
-                    dividers.sort(function(a, b) { return $ionicPosition.offset(a).top - $ionicPosition.offset(b).top; });
-                    var sctop = $ionicPosition.offset(scroll).top;
-                    if ($ionicPosition.offset(dividers[0]).top - sctop - dividers[0].prop('offsetHeight') > 0) {
-                        var letter = dividers[0][0].innerHTML.trim(),
-                            i = $scope.letters.indexOf(letter);
-                        if (i == 0) return;
-                        active = $scope.letters[i-1];
-                    } else for (var i = 0; i < dividers.length; ++i) { // can be changed to binary search
-                        if ($ionicPosition.offset(dividers[i]).top - sctop - dividers[i].prop('offsetHeight') < 0) { // this equals to jquery outerHeight
-                            if (i === dividers.length-1 || $ionicPosition.offset(dividers[i+1]).top - sctop -
-                                 (dividers[i].prop('offsetHeight') + dividers[i+1].prop('offsetHeight')) > 0) {
-                                active = dividers[i][0].innerHTML.trim();
-                                break;
+                    //$fakeHeader.text(topElement.headerText);
+                    //delta += 30;
+                    if (topElementBottom) {
+                        if (topElementBottom + delta < 0 && topElementBottom + delta > -topElement.headerHeight) {
+                            $fakeHeader.addClass(options.classes.hidden);
+                            //angular.element(topElement.list).addClass(options.classes.animated);
+                            var listElem = document.getElementById(angular.element(topElement.list).attr("id"));
+                            listElem.className = listElem.className.replace(options.classes.animated, ""); // first remove the class name if that already exists
+                            listElem.className = listElem.className + " " + options.classes.animated;
+                        } else {
+                            $fakeHeader.removeClass(options.classes.hidden);
+                            if (topElement) {
+                                //angular.element(topElement.list).removeClass(options.classes.animated);
+                                var listElem = document.getElementById(angular.element(topElement.list).attr("id"));
+                                listElem.className = listElem.className.replace(options.classes.animated, "");
                             }
                         }
+                        $fakeHeader.html(topElement.headerText);
                     }
-                    if (lastActive != active) {
-                        if (active) clone[0].innerHTML = active;
+                }
+            }
 
-                        var className = $attr.ionStickyClass,
-                            r = new RegExp(className,'g');
-
-                        if (lastActive) {
-                            var e = scroll.parent()[0].getElementsByClassName(lastActive);
-                            if (e && e[0]) e[0].className = e[0].className.replace(r,'');
-                        }
-                        if (active) {
-                            var e = scroll.parent()[0].getElementsByClassName(active);
-                            if (e && e[0]) e[0].className += ' ' + className;
-                        }
-                        lastActive = active;
-                    }
-                }, 200);
-            scroll.on('scroll', function (event) {
-                updateSticky();
-            });
         }
-    }
-}]);
+    })
+    .directive('headerShrink', function($document) {
+      var fadeAmt;
+
+      var shrink = function(header, content, amt, max) {
+        amt = Math.min(max, amt);
+        fadeAmt = 1 - amt / max;
+        ionic.requestAnimationFrame(function() {
+          header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, -' + amt + 'px, 0)';
+          for(var i = 0, j = header.children.length; i < j; i++) {
+            header.children[i].style.opacity = fadeAmt;
+          }
+        });
+      };
+
+      return {
+        restrict: 'A',
+        link: function($scope, $element, $attr, sticky) {
+          var starty = $scope.$eval($attr.headerShrink) || 0;
+          var shrinkAmt;
+
+          var amt;
+
+          var y = 0;
+          var prevY = 0;
+          var scrollDelay = 0.4;
+
+          var fadeAmt;
+          
+          var header = $document[0].body.querySelector('.bar-header');
+          var headerHeight = header.offsetHeight;
+          
+          function onScroll(e) {
+            var scrollTop = e.target.scrollTop || e.detail.scrollTop;
+
+            if(scrollTop >= 0) {
+              y = Math.min(headerHeight / scrollDelay, Math.max(0, y + scrollTop - prevY));
+            } else {
+              y = 0;
+            }
+
+            ionic.requestAnimationFrame(function() {
+              /*var affixElem = document.querySelector('.header-affix');
+              if (y && affixElem){
+                affixElem.classList.remove('fixed-top');
+              }else{
+                affixElem.classList.add('fixed-top');
+              }*/
+              var pane = document.querySelector('.view-container');
+              if (y){
+                pane.classList.add('pane-top');
+              }else{
+                pane.classList.remove('pane-top');
+              }
+              fadeAmt = 1 - (y / headerHeight);
+              header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + -y + 'px, 0)';
+              for(var i = 0, j = header.children.length; i < j; i++) {
+                header.children[i].style.opacity = fadeAmt;
+              }
+            });
+
+            prevY = scrollTop;
+          }
+
+          $element.bind('scroll', onScroll);
+        }
+      }
+    });

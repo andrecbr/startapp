@@ -392,3 +392,46 @@ ion-popover-view {
 .off-canvas-y{
 	transform: translateY(-100%);
 }
+
+
+.item-divider{
+  z-index: 9;
+}
+.item-container {
+  margin: 0;
+  min-height: 1px;
+  overflow: hidden;
+  padding: 36px 0 0 0;
+  position: relative;
+  width: 100%;
+}
+.list-sticky .item-divider {
+  bottom: auto;
+  left: 0;
+  line-height: 20px;
+  min-height: 1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 7;
+}
+
+.item-divider.item-hidden {
+	visibility: hidden;
+}
+.item-container.item-animated .item-divider {
+  bottom: 0;
+  top: auto;
+}
+.header-affix{
+  transition: all .300s;
+  top: 0;
+}
+.fixed-top{
+  top: $bar-height;
+}
+.pane-top {
+  transition: all .300s;
+  height: calc(100% + #{$bar-height}) !important;
+  margin-top: -$bar-height;
+}
