@@ -10024,6 +10024,10 @@ span.item-image:before {
 .item-avatar-left .item-content {
   min-height: 72px !important; }
 
+.item > .icon-top {
+  align-items: flex-start;
+  padding-top: 16px; }
+
 drawer .item-icon-left .icon, .menu-left .item-icon-left .icon {
   left: 15px; }
 
@@ -10058,11 +10062,6 @@ drawer .item .item-content.activated, .menu-left .item.active,
 
 .list.card {
   overflow: visible; }
-  .list.card .item:last-child {
-    /*box-shadow: 0 3px 2px -1px rgba(0, 0, 0, .15) !important;
-		border-bottom-width: 1px;
-		border-bottom-style: solid;
-		border-bottom-color: $item-default-border;*/ }
 
 .list-borderless .item, .item-borderless {
   border-width: 0 !important; }
@@ -10115,7 +10114,7 @@ ion-popover-view {
 .bar.bar-header .button:last-child {
   width: 46px; }
 
-.affix {
+.header-affix {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
 
 .affix-top {
@@ -10132,10 +10131,9 @@ ion-popover-view {
   z-index: 9; }
 
 .item-container {
-  margin: 0;
   min-height: 1px;
   overflow: hidden;
-  padding: 36px 0 0 0;
+  padding: 72px 0 0 0;
   position: relative;
   width: 100%; }
 

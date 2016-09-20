@@ -3,7 +3,6 @@ angular.module('ion-sticky', ['ionic'])
         return {
             restriction: 'A',
             link: function($scope, element, attributes) {
-                //console.log("onRepeatDone");
                 if ($scope.$last) {
                     $scope.$emit("ng_repeat_done", element);
                 };
@@ -45,8 +44,7 @@ angular.module('ion-sticky', ['ionic'])
                                 $interval.cancel(stop);
                             }
                         });
-
-                    }
+                    }, true
                 );
                 scope.$on('ng_repeat_done', function(domainElement) {
                     scope.list_render_completed = true;
@@ -55,9 +53,21 @@ angular.module('ion-sticky', ['ionic'])
                 var items = [],
                     options = angular.extend(defaults, attrs),
                     $element = angular.element(element),
-                    $fakeHeader = angular.element('<div class="' + options.classes.stationaryHeader + '"/>');
+                    $fakeHeader = angular.element('<div class="' + options.classes.stationaryHeader + '"/>'),
+                    headerBars = [];
 
-
+                scope.$on('$ionicParentView.beforeEnter', function(){
+                    headerBars = document.querySelectorAll('ion-header-bar');
+                    for(var i=0, len=headerBars.length; i<len; ++i){
+                        headerBars[i].classList.add('has-tabs-top');
+                    }
+                });
+                scope.$on('$ionicParentView.beforeLeave', function(){
+                    //var headerBars = document.querySelectorAll('ion-header-bar.has-tabs-top');
+                    for(var i=0, len=headerBars.length; i<len; ++i){
+                        headerBars[i].classList.remove('has-tabs-top');
+                    }
+                });
 
                 scope.updateItems = function() {
                     console.log("updateItems");
@@ -69,11 +79,9 @@ angular.module('ion-sticky', ['ionic'])
 
                     //$element.after($fakeHeader);
                     $element.parent()[0].insertBefore($fakeHeader[0], $element[0]);
-                  
 
                     items = [];
                     angular.forEach($groupContainer, function(elem, index) {
-                        //console.log($groupContainer);
                         var $tmp_list = $groupContainer.eq(index);
 
                         var $tmp_listHeight = $tmp_list.prop('offsetHeight'),
@@ -92,10 +100,7 @@ angular.module('ion-sticky', ['ionic'])
                     });
 
                     $fakeHeader.html(items[0].headerText);
-                }
-
-
-
+                };
 
                 scope.checkPosition = function() {
                     var i = 0,
@@ -107,6 +112,7 @@ angular.module('ion-sticky', ['ionic'])
                     var delta = items[0].listOffset;
 
                     //while ((items[i].listOffset - currentTop) <= 0) {
+                    console.log(items[i].listOffset, currentTop, items[i].listOffset - currentTop, delta);
                     while ((items[i].listOffset - currentTop) <= delta) {
                         //while ((items[i].listOffset ) <= 50) {
                         topElement = items[i];
@@ -116,9 +122,9 @@ angular.module('ion-sticky', ['ionic'])
                             offscreenElement = topElement;
                         }
 
-                        i++;
+                        //i++;
 
-                        if (i >= items.length) {
+                        if (i++ >= items.length) {
                             i--;
                             break;
                         }
@@ -143,7 +149,7 @@ angular.module('ion-sticky', ['ionic'])
                         }
                         $fakeHeader.html(topElement.headerText);
                     }
-                }
+                };
             }
 
         }
@@ -165,19 +171,14 @@ angular.module('ion-sticky', ['ionic'])
       return {
         restrict: 'A',
         link: function($scope, $element, $attr, sticky) {
-          var starty = $scope.$eval($attr.headerShrink) || 0;
-          var shrinkAmt;
-
-          var amt;
-
-          var y = 0;
-          var prevY = 0;
-          var scrollDelay = 0.4;
-
-          var fadeAmt;
-          
-          var header = $document[0].body.querySelector('.bar-header');
-          var headerHeight = header.offsetHeight;
+          var starty = $scope.$eval($attr.headerShrink) || 0,
+              amt,
+              y = 0,
+              prevY = 0,
+              scrollDelay = 0.4,
+              fadeAmt,
+              header = $document[0].body.querySelector('.bar-header'),
+              headerHeight = header.offsetHeight;
           
           function onScroll(e) {
             var scrollTop = e.target.scrollTop || e.detail.scrollTop;
@@ -189,12 +190,6 @@ angular.module('ion-sticky', ['ionic'])
             }
 
             ionic.requestAnimationFrame(function() {
-              /*var affixElem = document.querySelector('.header-affix');
-              if (y && affixElem){
-                affixElem.classList.remove('fixed-top');
-              }else{
-                affixElem.classList.add('fixed-top');
-              }*/
               var pane = document.querySelector('.view-container');
               if (y){
                 pane.classList.add('pane-top');

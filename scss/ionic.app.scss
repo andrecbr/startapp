@@ -244,6 +244,10 @@ span.item-image:before {
 .item-avatar-left .item-content {
   min-height: $item-avatar-width + ($item-padding * 2) !important;
 }
+.item > .icon-top {
+  align-items: flex-start;
+  padding-top: $item-padding;
+}
 
 
 // Drawer
@@ -281,25 +285,13 @@ drawer, .menu-left {
 	margin-bottom: 5px !important;
 }
 
-.card,
-.list-inset {
-  //margin: $content-padding $content-padding;
-}
-
 .list:not(.list-inset) .item{
 	border-left-width: 0 !important;
 	border-right-width: 0 !important;
 }
 
 .list.card{
-	//box-shadow: none;
 	overflow: visible;
-	.item:last-child{
-		/*box-shadow: 0 3px 2px -1px rgba(0, 0, 0, .15) !important;
-		border-bottom-width: 1px;
-		border-bottom-style: solid;
-		border-bottom-color: $item-default-border;*/
-	}
 }
 
 .list-borderless .item, .item-borderless {
@@ -378,7 +370,7 @@ ion-popover-view {
 }
 
 
-.affix{
+.header-affix{
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12);
 }
 .affix-top{
@@ -398,10 +390,10 @@ ion-popover-view {
   z-index: 9;
 }
 .item-container {
-  margin: 0;
+  //margin: 0;
   min-height: 1px;
   overflow: hidden;
-  padding: 36px 0 0 0;
+  padding: 72px 0 0 0;
   position: relative;
   width: 100%;
 }
