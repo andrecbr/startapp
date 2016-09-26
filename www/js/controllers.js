@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('FeedCtrl', function($scope, $http, $timeout) {
+.controller('FeedCtrl', function($scope, $http, $timeout, $ionicPlatform) {
   /*
   var tumblr = require('tumblr.js');
   var client = tumblr.createClient({ consumer_key: 'ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT' });
@@ -33,11 +33,6 @@ angular.module('starter.controllers', [])
     //console.log(resp.posts); // now we've got all kinds of posts
   });
   */
-
-  if (window.StatusBar) {
-    StatusBar.backgroundColorByHexString('#ffffff');
-  }
-
   var vm = this,
       //page = 1,
       limit = 20,
@@ -91,7 +86,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('BrowseCtrl', function($scope, $ionicSlideBoxDelegate, $timeout) {
+.controller('ContactsCtrl', function($scope, $ionicSlideBoxDelegate, $timeout) {
   var vm = this;
 
   vm.busy = true;
@@ -122,26 +117,31 @@ angular.module('starter.controllers', [])
   };
 
   vm.contatos = [{
+    id: 1,
     name: 'Anthony Howardd Pack',
     photo: 'https://s3.amazonaws.com/uifaces/faces/twitter/emirik/73.jpg',
     favorite: true,
     status: 1
   },{
+    id: 2,
     name: 'John Doe',
     photo: 'https://s3.amazonaws.com/uifaces/faces/twitter/spjpgrd/73.jpg',
     favorite: true,
     status: 1
   },{
+    id: 3,
     name: 'Johnny Dope',
     color: randomColor(),
     favorite: false,
     status: 0
   },{
+    id: 4,
     name: 'Mark Markwelson',
     photo: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/73.jpg',
     favorite: false,
     status: 0
   },{
+    id: 5,
     name: 'William Wallace',
     color: randomColor(),
     favorite: true,

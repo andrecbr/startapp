@@ -1,11 +1,11 @@
-<ion-view view-title="Browse">
+<ion-view view-title="Contacts">
   <ion-content scroll="false" class="has-subheader">
   	<ion-slides slide-tabs-scrollable="false" mode="subheader" custom-class="bar-light no-padding-horizontal" slider="vm.slider" ion-slides-tabs options="{pagination:false, loop:false, effect:'slide'}">
-		  <ion-slide-page ion-slide-tab-label="<b>FAVORITOS</b>">
+		  <ion-slide-page ion-slide-tab-label="<b>FAVORITES</b>">
         <ion-content>
           <div class="padding" style="text-align:center" ng-show="vm.currentTab === 0 && vm.busy === true"><ion-spinner></ion-spinner></div>
           <ion-list>
-            <div class="item item-avatar item-icon-right" ng-repeat="item in favorites = (vm.contatos | filter:{favorite:true})" href="#" style="padding-right:16px">
+            <div class="item item-avatar item-icon-right" ng-repeat="item in favorites = (vm.contatos | filter:{favorite:true})" href="" ui-sref="app.contact({contactId: item.id})" style="padding-right:16px">
               <img ng-src="{{item.photo}}" ng-if="item.photo">
               <span class="item-image" data-name="{{item.name.substr(0,1)}}" ng-if="!item.photo" style="background-color:{{item.color}}"></span>
               <h2><b>{{item.name}}</b></h2>
@@ -22,11 +22,11 @@
           </ion-list>
         </ion-content>
       </ion-slide-page>
-      <ion-slide-page ion-slide-tab-label="<b>CONTATOS</b>">
+      <ion-slide-page ion-slide-tab-label="<b>CONTACTS</b>">
         <ion-content>
           <div class="padding" style="text-align:center" ng-show="vm.currentTab === 1 && vm.busy === true"><ion-spinner></ion-spinner></div>
           <ion-list>
-            <div class="item item-avatar item-icon-right" ng-repeat="item in vm.contatos track by $index" href="#" style="padding-right:16px">
+            <div class="item item-avatar item-icon-right" ng-repeat="item in vm.contatos track by $index" href="" ui-sref="app.contact({contactId: item.id})" style="padding-right:16px">
               <img ng-src="{{item.photo}}" ng-if="item.photo">
               <span class="item-image" data-name="{{item.name.substr(0,1)}}" ng-if="!item.photo" style="background-color:{{item.color}}"></span>
               <h2><b>{{item.name}}</b></h2>
@@ -43,7 +43,7 @@
           </ion-list>
         </ion-content>
 		  </ion-slide-page>
-		  <ion-slide-page ion-slide-tab-label="<b>FooBar</b>">
+		  <ion-slide-page ion-slide-tab-label="<b>CHATS</b>">
 		  	<div class="padding" style="text-align:center" ng-show="vm.currentTab === 2 && vm.busy === true"><ion-spinner></ion-spinner></div>
 		  </ion-slide-page>
 		</ion-slides>

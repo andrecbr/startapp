@@ -17,7 +17,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
-      //StatusBar.styleDefault();
+      StatusBar.styleDefault();
       StatusBar.backgroundColorByHexString('#387ef5');
       //StatusBar.hide();
     }
@@ -67,12 +67,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
       }
     }
   })
-  .state('app.browse', {
-    url: '/browse',
+  .state('app.contacts', {
+    url: '/contacts',
     views: {
       'menuContent': {
-        templateUrl: 'templates/browse.html',
-        controller: 'BrowseCtrl as vm'
+        templateUrl: 'templates/contacts.html',
+        controller: 'ContactsCtrl as vm'
+      }
+    }
+  })
+  .state('app.contact', {
+    url: '/contact/:contactId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/contact.html'
       }
     }
   })

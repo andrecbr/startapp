@@ -22,22 +22,15 @@ angular.module('starter')
             prevY = 0,
             scrollDelay = 0.4,
             fadeAmt,
-            header = $document[0].body.querySelector('.bar-header'),
-            headerHeight = header.offsetHeight;
+            headers = $document[0].body.querySelectorAll('.bar-header'),
+            headerHeight = headers[0].offsetHeight;
 
         $scope.$on('$ionicParentView.beforeEnter', function(){
-          var pane = document.querySelector('.menu-content');
-          if (pane){
-            pane.classList.add('animated');
-          }
+          document.querySelector('ion-content').classList.add('top');
         });
 
         $scope.$on('$ionicParentView.beforeLeave', function(){
-          var pane = document.querySelector('.pane-top');
-          if (pane){
-            pane.classList.remove('pane-top');
-          }
-          header.style[ionic.CSS.TRANSFORM] = 'translate3d(0,0,0)';
+          document.querySelector('ion-content').classList.remove('top');
         });
         
         function onScroll(e) {
@@ -50,17 +43,14 @@ angular.module('starter')
           }
 
           ionic.requestAnimationFrame(function() {
-            var pane = document.querySelector('.menu-content');
-            if (y){
-              pane.classList.add('pane-top');
-            }else{
-              pane.classList.remove('pane-top');
+            fadeAmt = 1 - (y / headerHeight);
+            for(var i = 0, j = headers.length; i < j; ++i){
+              document.querySelector('.fixed-top').style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + ((!y) ? y : '-54px') + ', 0)'; //header height
+              headers[i].style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + -y + 'px, 0)';
+              for(var a = 0, x = headers[i].children.length; a < x; ++a) {
+                headers[i].children[a].style.opacity = fadeAmt;
+              }
             }
-            /*fadeAmt = 1 - (y / headerHeight);
-            header.style[ionic.CSS.TRANSFORM] = 'translate3d(0, ' + -y + 'px, 0)';
-            for(var i = 0, j = header.children.length; i < j; i++) {
-              header.children[i].style.opacity = fadeAmt;
-            }*/
           });
 
           prevY = scrollTop;

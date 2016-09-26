@@ -19,7 +19,7 @@ $dark:                            #444 !default;
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 $light:                           #fff;
-$stable:                          #f8f8f8;
+$stable:                          #f7fbfc;
 $positive:                        #387ef5;
 $calm:                            #11c1f3;
 $balanced:                        #33cd5f;
@@ -55,6 +55,8 @@ $button-bar-button-height:        24px;
 $button-bar-button-padding:       8px;
 
 $button-large-icon-size:          24px;
+
+$button-light-border:             #f4f4f4;
 
 $badge-font-weight:								500;
 $badge-border-radius:							.25em;
@@ -157,8 +159,22 @@ hr{	border-bottom: 0 none; opacity: .2 }
 
 
 
-// Navicon
+$button-round-padding:            0 2.6rem !default;
+$button-round-padding-small:      0 2.1rem !default;
+$button-round-border-radius: 			64px !default;
 
+// Buttons
+.button-round{
+	padding: $button-round-padding;
+	border-radius: $button-round-border-radius;
+}
+.button-round.button-small{
+	padding: $button-round-padding-small;
+}
+
+
+
+// Navicon
 .ion-navicon, .ion-navicon:before, .ion-navicon:after {
   font-size: 32px !important;
   line-height: 32px !important;
@@ -244,6 +260,27 @@ span.item-image:before {
 .item-avatar-left .item-content {
   min-height: $item-avatar-width + ($item-padding * 2) !important;
 }
+.item-avatar-center,
+.item-avatar-center .item-content {
+  padding-left: $item-avatar-width + ($item-padding * 2);
+  padding-right: $item-avatar-width + ($item-padding * 2);
+  min-height: $item-avatar-width + ($item-padding * 2);
+
+  overflow: visible; //???
+  z-index: 3; //???
+
+  > img:first-child,
+  .item-image {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    max-width: $item-avatar-width*1.4;
+    max-height: $item-avatar-height*1.4;
+    width: 100%;
+    height: 100%;
+    border-radius: $item-avatar-border-radius;
+  }
+}
 .item > .icon-top {
   align-items: flex-start;
   padding-top: $item-padding;
@@ -302,7 +339,9 @@ drawer, .menu-left {
 
 // Cards
 .card-positive{	border-top: 4px solid $positive; }
-.card-stable{	border-top: 4px solid $input-label-color; }
+.card-stable{	border-top: 4px solid $stable; }
+.card-dark{	border-top: 4px solid $dark; }
+.card-muted{	border-top: 4px solid #767f8d; }
 
 
 
@@ -416,11 +455,15 @@ ion-popover-view {
   top: auto;
 }
 .header-affix{
-  transition: all .300s;
-  top: 0;
+  /*transition: all .300s;
+  top: 0;*/
 }
 .fixed-top{
   top: $bar-height;
+  left: 1px;
+}
+.top{
+	top: 0 !important;
 }
 .menu-content.animated{
 	transition: all .300s;
