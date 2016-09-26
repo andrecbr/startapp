@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('LoginCtrl', function($scope, $http, $timeout) {
+.controller('FeedCtrl', function($scope, $http, $timeout) {
   /*
   var tumblr = require('tumblr.js');
   var client = tumblr.createClient({ consumer_key: 'ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT' });
@@ -33,6 +33,10 @@ angular.module('starter.controllers', [])
     //console.log(resp.posts); // now we've got all kinds of posts
   });
   */
+
+  if (window.StatusBar) {
+    StatusBar.backgroundColorByHexString('#ffffff');
+  }
 
   var vm = this,
       //page = 1,

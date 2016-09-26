@@ -422,8 +422,10 @@ ion-popover-view {
 .fixed-top{
   top: $bar-height;
 }
+.menu-content.animated{
+	transition: all .300s;
+}
 .pane-top {
-  transition: all .300s;
   height: calc(100% + #{$bar-height}) !important;
   margin-top: -$bar-height;
 }

@@ -28,9 +28,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
 
   $ionicConfigProvider.scrolling.jsScrolling(false);
 
-  /*$httpProvider.defaults.useXDomain = true;
+  /*
+  $httpProvider.defaults.useXDomain = true;
   $httpProvider.defaults.withCredentials = true;
-  delete $httpProvider.defaults.headers.common["X-Requested-With"];*/
+  delete $httpProvider.defaults.headers.common["X-Requested-With"];
+  */
 
   $stateProvider
 
@@ -40,7 +42,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
   .state('app.config', {
     url: '/config',
     views: {
@@ -49,17 +50,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
       }
     }
   })
-
-  .state('app.login', {
-    url: '/login',
+  .state('app.feed', {
+    url: '/feed',
     views: {
       'menuContent': {
-        templateUrl: 'templates/login.html',
-        controller: 'LoginCtrl as vm'
+        templateUrl: 'templates/feed.html',
+        controller: 'FeedCtrl as vm'
       }
     }
   })
-
   .state('app.search', {
     url: '/search',
     views: {
@@ -68,26 +67,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
       }
     }
   })
-
   .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html',
-          controller: 'BrowseCtrl as vm'
-        }
+    url: '/browse',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/browse.html',
+        controller: 'BrowseCtrl as vm'
       }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
+    }
+  })
+  .state('app.playlists', {
+    url: '/playlists',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/playlists.html',
+        controller: 'PlaylistsCtrl'
       }
-    })
-
+    }
+  })
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
@@ -97,6 +94,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
       }
     }
   });
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/login');
+  $urlRouterProvider.otherwise('/app/feed');
 });
