@@ -59,11 +59,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
       }
     }
   })
-  .state('app.search', {
-    url: '/search',
+  .state('app.gallery', {
+    url: '/gallery',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/gallery.html',
+        controller: 'GalleryCtrl as vm'
       }
     }
   })
@@ -77,28 +78,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
     }
   })
   .state('app.contact', {
-    url: '/contact/:contactId',
+    url: '/contacts/:contactId',
     views: {
       'menuContent': {
         templateUrl: 'templates/contact.html'
       }
     }
   })
-  .state('app.playlists', {
-    url: '/playlists',
+  .state('app.places', {
+    url: '/places',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlists.html',
-        controller: 'PlaylistsCtrl'
+        templateUrl: 'templates/places.html',
+        controller: 'PlacesCtrl'
       }
     }
   })
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.place', {
+    url: '/places/:placeId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/place.html',
+        controller: 'PlaceCtrl'
+      }
+    }
+  })
+  .state('app.checkout', {
+    url: '/checkout',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/checkout.html'
       }
     }
   });

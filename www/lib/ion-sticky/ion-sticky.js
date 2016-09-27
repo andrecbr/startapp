@@ -1,7 +1,7 @@
 angular.module('ion-sticky', ['ionic'])
     .directive("onRepeatDone", function($timeout) {
         return {
-            restriction: 'A',
+            restrict: 'A',
             link: function($scope, element, attributes) {
                 if ($scope.$last) {
                     $scope.$emit("ng_repeat_done", element);

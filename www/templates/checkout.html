@@ -1,0 +1,61 @@
+<ion-view view-title="Checkout">
+  <ion-content>
+  	<div class="list list-borderless">
+	  	<div class="item item-avatar">
+	  		<img src="http://cdn4.aptoide.com/imgs/c/6/6/c666c26bbb640b8b5645ff5d5cfb3499.png">
+	  		<b class="pull-right">R$ 950,00</b>
+			  <h2>Guns N' Roses</h2>
+			  <p>Ticket master premium</p>
+			</div>
+		</div>
+  	<div class="item item-image item-borderless" style="display:none">
+	    <div class="card calm-bg light no-margin-top" style="padding:90px 0 20px">
+	    	<div class="row">
+		    	<div class="col text-left">{{number ? number.substr(0,4) : '1234'}}</div>
+		    	<div class="col text-left">{{number ? number.substr(4,4) : '1234'}}</div>
+		    	<div class="col text-left">{{number ? number.substr(8,4) : '1234'}}</div>
+		    	<div class="col text-left">{{number ? number.substr(12,4) : '1234'}}</div>
+	    	</div>
+	    	<div class="row">
+		    	<div class="col col-75 text-left">{{fullname ? fullname : 'FULL NAME'}}</div>
+		    	<div class="col text-left">{{expiration ? expiration: '00/00'}}</div>
+	    	</div>
+	    </div>
+	  </div>
+  	<div class="list list-borderless">
+		  <div class="row">
+		  	<div class="col no-padding">
+	  			<label class="item item-input item-stacked-label">
+				  	<span class="input-label">Card number</span>
+				    <input type="tel" maxlength="19" placeholder="Card number" autofocus ng-model="number">
+	  			</label>
+  			</div>
+		  </div>
+		  <div class="row">
+		  	<div class="col no-padding">
+	  			<label class="item item-input item-stacked-label">
+				  	<span class="input-label">Full Name</span>
+				    <input type="text" maxlength="24" placeholder="Full Name" ng-model="fullname">
+	  			</label>
+		  	</div>
+		  </div>
+		  <div class="row">
+		  	<div class="col no-padding">
+				  <label class="item item-input item-stacked-label">
+		  			<span class="input-label">Expiration Date</span>
+				    <input type="month" maXxlength="5" placeholder="MM/YY" ng-model="expiration">
+				  </label>
+			  </div>
+		  	<div class="col no-padding">
+				  <label class="item item-input item-stacked-label">
+		  			<span class="input-label">CVV</span>
+				    <input type="tel" maxlength="3" placeholder="CVV">
+				  </label>
+			  </div>
+		  </div>
+		</div>
+  </ion-content>
+  <ion-footer-bar class="bar-calm" align-title="center">
+    <a class="title non-decoration" href="" ui-sref="app.scan">BUY TICKET</a>
+  </ion-footer-bar>
+</ion-view>

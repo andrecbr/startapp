@@ -54,7 +54,7 @@ $button-bar-button-font-size:     12px;
 $button-bar-button-height:        24px;
 $button-bar-button-padding:       8px;
 
-$button-large-icon-size:          24px;
+//$button-large-icon-size:          24px;
 
 $button-light-border:             #f4f4f4;
 
@@ -86,6 +86,18 @@ $border-distance: 								20px;
 hr{	border-bottom: 0 none; opacity: .2 }
 
 .non-decoration{ text-decoration: none !important; }
+
+.icon-fw{
+	display: inline-block;
+  text-align: center;
+  //width: 1.28571em;
+  width: .75em;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: darken($base-color, 20%);
+}
 
 h1, .h1 { font-size: floor($font-size-base * 2.30); } // ~32px
 
@@ -149,7 +161,7 @@ h1, .h1 { font-size: floor($font-size-base * 2.30); } // ~32px
 
 .subtext { font-size: 11px; letter-spacing: 1px }
 
-.muted, a.muted, .subtext{ color: #767f8d; }
+.muted, a.muted, .subtext{ color: lighten(#767f8d, 10%) !important; }
 
 .highlighted{ font-weight: 600 }
 
@@ -387,6 +399,11 @@ ion-popover-view {
     box-shadow: none;
   }
 }
+.bar-transparent{
+	background: none !important;
+	border: 0 none;
+	box-shadow: none;
+}
 .tabs-top .bar-header{
   box-shadow: none;
 }
@@ -494,4 +511,42 @@ ion-popover-view {
 .overlay-top{
 	bottom: auto;
 	top: 0;
+}
+
+
+.ion-android-star.muted{
+	color: lighten(#767f8d, 35%) !important;
+}
+
+
+.item-gradient-top{
+	&:before {
+    content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-image: linear-gradient(to bottom, rgba(0,0,0,.8), rgba(0,0,0, 0) 35%);
+		opacity: .6; 
+  }
+}
+
+.gallery-grid{
+	.row{
+		padding: 3px;
+		padding-top: 0;
+		padding-bottom: 0;
+		&:first-child{
+			padding-top: 3px;
+		}
+	}
+	.col{
+		padding: 3px;
+	}
+	img{
+		object-fit: cover;
+		height: 80px;
+		width: 80px;
+	}
 }

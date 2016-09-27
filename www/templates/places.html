@@ -1,0 +1,21 @@
+<ion-view view-title="Places">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-thumbnail-left" ng-repeat="place in places" href="" ui-sref="app.place({placeId: place.id})">
+      	<img src="" ng-src="{{place.thumbnail}}">
+        <h2>{{place.title}}</h2>
+        <div>
+        	<i class="icon ion-android-star calm"></i>
+        	<i class="icon ion-android-star calm"></i>
+        	<i class="icon ion-android-star calm"></i>
+        	<i class="icon ion-android-star-half calm"></i>
+        	<i class="icon ion-android-star-outline calm"></i>
+        </div>
+        <p class="muted">
+	        <i class="icon icon-fw ion-location"></i> 4347 Noble Pond Ramp, Lexington KY
+	        <br><i class="icon icon-fw ion-ios-telephone"></i> (555) 726-281
+        </p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

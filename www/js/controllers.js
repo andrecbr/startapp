@@ -9,18 +9,30 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+.controller('PlacesCtrl', function($scope) {
+  $scope.places = [
+    { title: 'Kafka Café', id: 1, thumbnail: 'https://unsplash.it/160/160?image=425' },
+    { title: 'Hard Rock Cafe', id: 2, thumbnail: 'https://unsplash.it/160/160?image=836' },
+    { title: 'Tomorrowland', id: 3, thumbnail: 'https://unsplash.it/160/160?image=646' },
+    { title: 'Santa Monica Beach', id: 4, thumbnail: 'https://unsplash.it/160/160?image=851' }
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('GalleryCtrl', function($scope, $stateParams) {
+  var vm = this;
+
+  vm.images = [];
+  vm.imagesLength = 0;
+ 
+  //vm.loadImages = function() {
+    for(var i = 0; i < 102; i++) {
+      vm.images.push({id: i, src: "http://placehold.it/200x80"});
+      vm.imagesLength++;
+    }
+  //}
+})
+
+.controller('PlaceCtrl', function($scope, $stateParams) {
 })
 
 .controller('FeedCtrl', function($scope, $http, $timeout, $ionicPlatform) {

@@ -8,7 +8,7 @@
             <div class="item item-avatar item-icon-right" ng-repeat="item in favorites = (vm.contatos | filter:{favorite:true})" href="" ui-sref="app.contact({contactId: item.id})" style="padding-right:16px">
               <img ng-src="{{item.photo}}" ng-if="item.photo">
               <span class="item-image" data-name="{{item.name.substr(0,1)}}" ng-if="!item.photo" style="background-color:{{item.color}}"></span>
-              <h2><b>{{item.name}}</b></h2>
+              <h2>{{item.name}}</h2>
               <span class="item-note">
                 Celular
               </span>
@@ -17,7 +17,7 @@
                 <span ng-if="item.status === 0" class="muted">Busy</span>
                 <span ng-if="item.status > 0" class="muted">Online</span>
               </p>
-              <i class="icon icon-top" ng-class="{'ion-android-star energized': item.favorite, 'ion-android-star-outline muted': !item.favorite}"></i>
+              <i class="icon icon-top ion-android-star energized"></i>
             </div>
           </ion-list>
         </ion-content>
@@ -29,7 +29,7 @@
             <div class="item item-avatar item-icon-right" ng-repeat="item in vm.contatos track by $index" href="" ui-sref="app.contact({contactId: item.id})" style="padding-right:16px">
               <img ng-src="{{item.photo}}" ng-if="item.photo">
               <span class="item-image" data-name="{{item.name.substr(0,1)}}" ng-if="!item.photo" style="background-color:{{item.color}}"></span>
-              <h2><b>{{item.name}}</b></h2>
+              <h2>{{item.name}}</h2>
               <span class="item-note">
                 Celular
               </span>
@@ -38,7 +38,7 @@
                 <span ng-if="item.status === 0" class="muted">Busy</span>
                 <span ng-if="item.status > 0" class="muted">Online</span>
               </p>
-              <i class="icon icon-top" ng-class="{'ion-android-star energized': item.favorite, 'ion-android-star-outline muted': !item.favorite}"></i>
+              <i class="icon icon-top" ng-class="{'ion-android-star energized': item.favorite, 'ion-android-star muted': !item.favorite}"></i>
             </div>
           </ion-list>
         </ion-content>
