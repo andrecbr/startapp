@@ -22,4 +22,14 @@ angular.module('starter')
         });
       }
     }
-	});
+	})
+  .directive('fullScreen', function ($document, $timeout) {
+    var ionContent = [];
+    return {
+      restrict: 'A',
+      link: function($scope, $element) {
+        var el = angular.element(document.getElementsByClassName('backdrop')[0]);
+        el.after($element);
+      }
+    }
+  });

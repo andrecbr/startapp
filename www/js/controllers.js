@@ -18,21 +18,104 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('GalleryCtrl', function($scope, $stateParams) {
-  var vm = this;
+.controller('GalleryCtrl', function($scope, $http, $timeout, $ionicScrollDelegate, $ionicBackdrop) {
+
+  var vm = this,
+      limit = 50,
+      offset = 0,
+      busy = false;
 
   vm.images = [];
   vm.imagesLength = 0;
+
+  vm.imageOpened = '';
+
+  vm.closeImage = function (){
+    vm.imageOpened = '';
+    $timeout(function (){
+      $ionicBackdrop.release();
+    }, 300);
+  };
+
+  vm.openImage = function (url){
+    vm.imageOpened = url;
+    $ionicBackdrop.retain();
+  };
+
+  vm.busy = false;
+  vm.loadMore = function (reset){
+    vm.busy = true;
+    if (reset){
+      offset = 0;
+      vm.posts = [];
+    }
+    $http.jsonp('https://api.tumblr.com/v2/blog/nonsense-case.tumblr.com/posts?limit='+limit+'&offset='+offset+'&api_key=ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT&callback=JSON_CALLBACK')
+      .then(function (response){
+        vm.images.push(...response.data.response.posts);
+        vm.imagesLength = vm.images.length;
+        $ionicScrollDelegate.resize();
+        vm.busy = false;
+        offset += limit;
+      }, function (error){
+        $timeout(function (){
+          vm.loadMore(false);
+        }, 2000);
+      }).finally(function (){
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+  };
+
+  vm.refresh = function (){
+    vm.loadMore(true);
+  };
+
+  $scope.$on('$stateChangeSuccess', function() {
+    vm.loadMore(false);
+  });
+
+  var randomImages = ["http://placehold.it/200x95/F7DBA7/000000?text=+", "http://placehold.it/100x100/F1AB86/000000?text=+", "http://placehold.it/95x200/C57B57/000000?text=+", "http://placehold.it/500x600/D66853/000000?text=+", "http://placehold.it/500x95/549F93/000000?text=+", "http://placehold.it/95x500/E2B1B1/000000?text=+"];
  
   //vm.loadImages = function() {
-    for(var i = 0; i < 102; i++) {
-      vm.images.push({id: i, src: "http://placehold.it/200x80"});
+    /*for(var i = 0; i < 104; i++) {
+      vm.images.push({id: i, src: randomImages[Math.floor(Math.random() * randomImages.length)]});
       vm.imagesLength++;
-    }
+    }*/
   //}
 })
 
 .controller('PlaceCtrl', function($scope, $stateParams) {
+})
+
+.controller('CheckoutCtrl', function($scope, $stateParams) {
+  $scope.card = {
+    name: 'Mike Brown',
+    number: '5555 4444 3333 1111',
+    expiry: '11 / 2020',
+    cvc: '123'
+  };
+
+  $scope.clear = function() {
+    $scope.card = {};
+  };
+  $scope.clear();
+
+  $scope.cardPlaceholders = {
+    name: 'Your Full Name',
+    number: 'XXXX XXXX XXXX XXXX',
+    expiry: 'MM/YY',
+    cvc: 'XXX'
+  };
+
+  $scope.cardMessages = {
+    validDate: 'valid\nthru',
+    monthYear: 'MM/YY',
+  };
+
+  $scope.cardOptions = {
+    debug: false,
+    formatting: true
+  };
 })
 
 .controller('FeedCtrl', function($scope, $http, $timeout, $ionicPlatform) {
