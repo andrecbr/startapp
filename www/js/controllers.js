@@ -118,7 +118,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('FeedCtrl', function($scope, $http, $timeout, $ionicPlatform) {
+.controller('FeedCtrl', function($scope, $http, $timeout, $ionicScrollDelegate) {
   /*
   var tumblr = require('tumblr.js');
   var client = tumblr.createClient({ consumer_key: 'ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT' });
@@ -130,26 +130,28 @@ angular.module('starter.controllers', [])
   */
   var vm = this,
       //page = 1,
-      limit = 20,
-      offset = 0,
-      busy = false;
+      limit = 10,
+      offset = 0;
 
+  vm.showMe = true;
+
+  vm.busy = false;
   vm.posts = [];
-
-  vm.isBusy = function (){
-    return busy;
-  };
+  vm.postsLength = 0;
 
   /**
    * browserify -r ./node_modules/tumblr.js/lib/tumblr.js:tumblr.js -o ./www/lib/tumblr.js
   **/
   vm.loadMore = function (reset){
-    busy = true;
+    if (vm.busy){
+      return;
+    }
+    vm.busy = true;
     /*$http.jsonp('http://www.wookmark.com/api/json/popular?callback=JSON_CALLBACK&page='+page)
       .then(function (response){
         vm.posts.push(...response.data);
         $scope.$broadcast('scroll.infiniteScrollComplete');
-        busy = false;
+        vm.busy = false;
         page++;
       });*/
     if (reset){
@@ -159,15 +161,18 @@ angular.module('starter.controllers', [])
     $http.jsonp('https://api.tumblr.com/v2/blog/nonsense-case.tumblr.com/posts?limit='+limit+'&offset='+offset+'&api_key=ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT&callback=JSON_CALLBACK')
       .then(function (response){
         vm.posts.push(...response.data.response.posts);
-        busy = false;
+        vm.postsLength = vm.posts.length;
         offset += limit;
+        limit = 20;
       }, function (error){
         $timeout(function (){
           vm.loadMore(false);
         }, 2000);
       }).finally(function (){
+        $ionicScrollDelegate.resize();
         $scope.$broadcast('scroll.infiniteScrollComplete');
         $scope.$broadcast('scroll.refreshComplete');
+        vm.busy = false;
       });
   };
 
@@ -176,7 +181,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.$on('$stateChangeSuccess', function() {
-    vm.loadMore(false);
+    //vm.loadMore(false);
   });
 
 })

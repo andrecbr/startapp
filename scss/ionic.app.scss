@@ -120,6 +120,10 @@ h1, .h1 { font-size: floor($font-size-base * 2.30); } // ~32px
 
 .default{	color: $base-color !important }
 
+.no-border{
+	border: 0 none !important;
+}
+
 .no-margin{
 	margin: 0 !important;
 	&-top{
@@ -137,6 +141,10 @@ h1, .h1 { font-size: floor($font-size-base * 2.30); } // ~32px
 	&-horizontal{
 		@extend .no-margin-left;
 		@extend .no-margin-right;
+		&.card{
+			margin-left: -1px !important;
+			margin-right: -1px !important;
+		}
 	}
 }
 
@@ -483,14 +491,14 @@ ion-slides{
 .item-divider{
   z-index: 9;
 }
-.item-container {
+/*.item-container {
   //margin: 0;
   min-height: 1px;
   overflow: hidden;
   padding: 72px 0 0 0;
   position: relative;
   width: 100%;
-}
+}*/
 .list-sticky .item-divider {
   bottom: auto;
   left: 0;
