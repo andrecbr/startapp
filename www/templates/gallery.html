@@ -1,20 +1,22 @@
 <ion-view view-title="Gallery">
   <ion-content>
-  	<img ng-click="vm.closeImage()" full-screen ng-src="{{::vm.imageOpened}}" ng-if="vm.imageOpened" ng-class="{animated: vm.imageOpened}">
-  	<div class="gallery-grid">
-	  	<div class="row" ng-repeat="image in vm.images track by $index" ng-if="$index % 3 === 0">
-	      <div class="col col-33" ng-if="$index < vm.imagesLength" ng-click="vm.openImage(vm.images[$index].photos[0].alt_sizes[1].url)">
-	      	<img ng-src="{{::vm.images[$index].photos[0].alt_sizes[2].url}}" width="100%" />
-	      </div>
-	      <div class="col col-33" ng-if="$index+1 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+1].photos[0].alt_sizes[1].url)">
-	        <img ng-src="{{::vm.images[$index+1].photos[0].alt_sizes[2].url}}" width="100%" />
-	      </div>
-	      <div class="col col-33" ng-if="$index+2 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+2].photos[0].alt_sizes[1].url)">
-	        <img ng-src="{{::vm.images[$index+2].photos[0].alt_sizes[2].url}}" width="100%" />
-	      </div>
+  	<div ng-if="vm.showMe">
+	  	<img ng-click="vm.closeImage()" full-screen ng-src="{{::vm.imageOpened}}" ng-if="vm.imageOpened" ng-class="{animated: vm.imageOpened}">
+	  	<div class="gallery-grid">
+		  	<div class="row" ng-repeat="image in vm.images track by $index" ng-if="$index % 3 === 0">
+		      <div class="col col-33" ng-if="$index < vm.imagesLength" ng-click="vm.openImage(vm.images[$index].photos[0].alt_sizes[1].url)">
+		      	<img ng-src="{{::vm.images[$index].photos[0].alt_sizes[2].url}}" width="100%" />
+		      </div>
+		      <div class="col col-33" ng-if="$index+1 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+1].photos[0].alt_sizes[1].url)">
+		        <img ng-src="{{::vm.images[$index+1].photos[0].alt_sizes[2].url}}" width="100%" />
+		      </div>
+		      <div class="col col-33" ng-if="$index+2 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+2].photos[0].alt_sizes[1].url)">
+		        <img ng-src="{{::vm.images[$index+2].photos[0].alt_sizes[2].url}}" width="100%" />
+		      </div>
+		    </div>
 	    </div>
     </div>
-    <ion-infinite-scroll on-infinite="vm.loadMore()" distance="30%" ng-if="!vm.busy" ng-show="vm.imagesLength"></ion-infinite-scroll>
+    <ion-infinite-scroll on-infinite="vm.loadMore()" distance="20%"></ion-infinite-scroll>
   </ion-content>
   <div class="tabs-color-dark">
 	  <div class="tabs tabs-icon-only no-border">

@@ -6,9 +6,11 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var angularTemplateCache = require('gulp-angular-templatecache');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  templates: './www/templates/**/*.html'
 };
 
 gulp.task('default', ['sass']);
@@ -26,11 +28,19 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
+gulp.task('templates',  function() {
+  return gulp.src(paths.templates)
+    .pipe(angularTemplateCache({standalone: true}))
+    .pipe(concat('templates.js'))
+    .pipe(gulp.dest('./www/lib/'));
 });
 
-gulp.task('serve:before', [ "sass", "watch"]);
+gulp.task('watch', function() {
+  gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.templates, ['templates']);
+});
+
+gulp.task('serve:before', [ "sass", "templates", "watch"]);
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()

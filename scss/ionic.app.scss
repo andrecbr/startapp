@@ -84,6 +84,7 @@ $border-distance: 								20px;
 /**
  * Utils
 **/
+body{ -webkit-transform: translate3d(0px,0px,0px) }
 hr{	border-bottom: 0 none; opacity: .2 }
 
 .non-decoration{ text-decoration: none !important; }
@@ -478,13 +479,18 @@ ion-slides{
 .affix-top{
 	top: 0 !important;
 	transition: all .300s;
+	-webkit-transition: all .300s;
 }
 
 .off-canvas, .affix{
+	-webkit-transform: translate3d(0,0,0);
+	-webkit-transition: all .300s;
 	transition: all .300s;
 }
 .off-canvas-y{
-	transform: translateY(-100%);
+	//transform: translateY(-100%);
+	-webkit-transform: translate3d(0,-100%,0);
+	transform: translate3d(0,-100%,0);
 }
 
 
@@ -527,6 +533,10 @@ ion-slides{
 }
 .top{
 	top: 0 !important;
+}
+.menu-content{
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
 }
 .menu-content.animated{
 	transition: all .300s;
@@ -624,11 +634,14 @@ img[full-screen]{
 	position:absolute;
 	top:50%;
 	left:50%;
-	transform:translate(-50%,-50%) scale(0);
 	max-width:95%;
-	transition: all 150ms;
 	z-index:12;
+	-webkit-transform:translate3d(-50%,-50%,0) scale(0);
+	transform:translate3d(-50%,-50%,0) scale(0);
+	-webkit-transition: all 150ms;
+	transition: all 150ms;
 	&.animated{
-		transform: translate(-50%,-50%) scale(1);
+		-webkit-transform: translate3d(-50%,-50%,0) scale(1);
+		transform: translate3d(-50%,-50%,0) scale(1);
 	}
 }

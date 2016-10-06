@@ -151,7 +151,7 @@ var slidingTabsDirective = angular.module("ionic").directive('ionSlidesTabs', ['
                 var targetWidth = targetTab[0].offsetWidth;
                 indicator.css({
                     "-webkit-transition-duration": "300ms",
-                    "-webkit-transform":"translate(" + targetLeftOffset + "px,0px)",
+                    "-webkit-transform":"translate3d(" + targetLeftOffset + "px,0px,0px)",
                     "width": targetWidth + "px"
                 });
                 if (options.slideTabsScrollable && ionicScrollDelegate) {
@@ -196,7 +196,7 @@ var slidingTabsDirective = angular.module("ionic").directive('ionSlidesTabs', ['
 
                 indicator.css({
                     "-webkit-transition-duration":"0ms",
-                    "-webkit-transform":"translate(" + indicatorPos + "px,0px)",
+                    "-webkit-transform":"translate3d(" + indicatorPos + "px,0px,0px)",
                     "width": indicatorWidth + "px"
                 });
 

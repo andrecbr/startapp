@@ -38,7 +38,7 @@ angular.module('ion-sticky', ['ionic'])
                             if (scope.list_render_completed === true) {
                                 scope.list_render_completed = false;
                                 $timeout(function() {
-                                    console.log("updated list");
+                                    //console.log("updated list");
                                     scope.updateItems();
                                 }, 500);
                                 $interval.cancel(stop);
