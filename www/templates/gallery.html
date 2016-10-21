@@ -4,14 +4,14 @@
 	  	<img ng-click="vm.closeImage()" full-screen ng-src="{{::vm.imageOpened}}" ng-if="vm.imageOpened" ng-class="{animated: vm.imageOpened}">
 	  	<div class="gallery-grid">
 		  	<div class="row" ng-repeat="image in vm.images track by $index" ng-if="$index % 3 === 0">
-		      <div class="col col-33" ng-if="$index < vm.imagesLength" ng-click="vm.openImage(vm.images[$index].photos[0].alt_sizes[1].url)">
-		      	<img ng-src="{{::vm.images[$index].photos[0].alt_sizes[2].url}}" width="100%" />
+		      <div class="col col-33" ng-if="$index < vm.imagesLength" ng-click="vm.openImage(vm.images[$index].images.standard_resolution.url)">
+		      	<img ng-src="{{::vm.images[$index].images.low_resolution.url}}" width="100%" />
 		      </div>
-		      <div class="col col-33" ng-if="$index+1 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+1].photos[0].alt_sizes[1].url)">
-		        <img ng-src="{{::vm.images[$index+1].photos[0].alt_sizes[2].url}}" width="100%" />
+		      <div class="col col-33" ng-if="$index+1 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+1].images.standard_resolution.url)">
+		        <img ng-src="{{::vm.images[$index+1].images.low_resolution.url}}" width="100%" />
 		      </div>
-		      <div class="col col-33" ng-if="$index+2 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+2].photos[0].alt_sizes[1].url)">
-		        <img ng-src="{{::vm.images[$index+2].photos[0].alt_sizes[2].url}}" width="100%" />
+		      <div class="col col-33" ng-if="$index+2 < vm.imagesLength" ng-click="vm.openImage(vm.images[$index+2].images.standard_resolution.url)">
+		        <img ng-src="{{::vm.images[$index+2].images.low_resolution.url}}" width="100%" />
 		      </div>
 		    </div>
 	    </div>

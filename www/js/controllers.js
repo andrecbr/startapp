@@ -51,7 +51,7 @@ angular.module('starter.controllers', [])
   .controller('GalleryCtrl', function($scope, $http, $timeout, $ionicScrollDelegate, $ionicBackdrop) {
 
     var vm = this,
-        limit = 50,
+        limit = 6
         offset = 0;
 
     vm.images = [];
@@ -72,12 +72,37 @@ angular.module('starter.controllers', [])
 
     vm.busy = false;
     vm.loadMore = function (reset){
+      if (offset < 0){
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        $scope.$broadcast('scroll.refreshComplete');
+        return;
+      }
       vm.busy = true;
       if (reset){
         offset = 0;
         vm.posts = [];
       }
-      $http.jsonp('https://api.tumblr.com/v2/blog/nonsense-case.tumblr.com/posts?limit='+limit+'&offset='+offset+'&api_key=ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT&callback=JSON_CALLBACK')
+
+      $http.jsonp('https://api.instagram.com/v1/users/self/media/recent/?count='+limit+'&max_id='+offset+'&access_token=2255850461.22ba1f3.8af0bf1b560c463aa07f321365552566&callback=JSON_CALLBACK')
+        .then(function (response){
+          if (response.data.pagination.next_max_id){
+            offset = response.data.pagination.next_max_id;
+          }else{
+            offset = -1;
+          }
+          vm.images.push(...response.data.data);
+          vm.imagesLength = vm.images.length;
+          $ionicScrollDelegate.resize();
+          vm.busy = false;
+        }, function (error){
+          $timeout(function (){
+            vm.loadMore(false);
+          }, 2000);
+        }).finally(function (){
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+          $scope.$broadcast('scroll.refreshComplete');
+        });
+      /*$http.jsonp('https://api.tumblr.com/v2/blog/nonsense-case.tumblr.com/posts?limit='+limit+'&offset='+offset+'&api_key=ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT&callback=JSON_CALLBACK')
         .then(function (response){
           vm.images.push(...response.data.response.posts);
           vm.imagesLength = vm.images.length;
@@ -91,7 +116,7 @@ angular.module('starter.controllers', [])
         }).finally(function (){
           $scope.$broadcast('scroll.infiniteScrollComplete');
           $scope.$broadcast('scroll.refreshComplete');
-        });
+        });*/
     };
 
     vm.refresh = function (){
@@ -186,7 +211,9 @@ angular.module('starter.controllers', [])
      * browserify -r ./node_modules/tumblr.js/lib/tumblr.js:tumblr.js -o ./www/lib/tumblr.js
     **/
     vm.loadMore = function (reset){
-      if (vm.busy){
+      if (offset < 0){
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        $scope.$broadcast('scroll.refreshComplete');
         return;
       }
       vm.busy = true;
@@ -201,7 +228,26 @@ angular.module('starter.controllers', [])
         offset = 0;
         vm.posts = [];
       }
-      $http.jsonp('https://api.tumblr.com/v2/blog/nonsense-case.tumblr.com/posts?limit='+limit+'&offset='+offset+'&api_key=ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT&callback=JSON_CALLBACK')
+      $http.jsonp('https://api.instagram.com/v1/users/self/media/recent/?count='+limit+'&max_id='+offset+'&access_token=2255850461.22ba1f3.8af0bf1b560c463aa07f321365552566&callback=JSON_CALLBACK')
+        .then(function (response){
+          if (response.data.pagination.next_max_id){
+            offset = response.data.pagination.next_max_id;
+          }else{
+            offset = -1;
+          }
+          vm.posts.push(...response.data.data);
+          vm.postsLength = vm.posts.length;
+          $ionicScrollDelegate.resize();
+          vm.busy = false;
+        }, function (error){
+          $timeout(function (){
+            vm.loadMore(false);
+          }, 2000);
+        }).finally(function (){
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+          $scope.$broadcast('scroll.refreshComplete');
+        });
+      /*$http.jsonp('https://api.tumblr.com/v2/blog/nonsense-case.tumblr.com/posts?limit='+limit+'&offset='+offset+'&api_key=ncc9oROiBppeeAacG7g75OB07Qy9f5PcrtGv4AwaEeD9gIhIbT&callback=JSON_CALLBACK')
         .then(function (response){
           vm.posts.push(...response.data.response.posts);
           vm.postsLength = vm.posts.length;
@@ -216,7 +262,7 @@ angular.module('starter.controllers', [])
           $scope.$broadcast('scroll.infiniteScrollComplete');
           $scope.$broadcast('scroll.refreshComplete');
           vm.busy = false;
-        });
+        });*/
     };
 
     vm.refresh = function (){

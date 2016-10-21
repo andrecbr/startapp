@@ -84,7 +84,6 @@ $border-distance: 								20px;
 /**
  * Utils
 **/
-body{ -webkit-transform: translate3d(0px,0px,0px) }
 hr{	border-bottom: 0 none; opacity: .2 }
 
 .non-decoration{ text-decoration: none !important; }
@@ -316,6 +315,10 @@ span.item-image:before {
   align-items: flex-start;
   padding-top: $item-padding;
 }
+ion-content > .item {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
 
 
 // Drawer

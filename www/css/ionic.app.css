@@ -9859,7 +9859,7 @@ ion-slide {
   .slidingTabs .tab-indicator-wrapper {
     width: 100%;
     height: 2px;
-    -webkit-transform: translateY(-2px);
+    -webkit-transform: translate3d(0px, -2px, 0px);
     position: absolute; }
     .slidingTabs .tab-indicator-wrapper .tab-indicator {
       height: 100%;
@@ -10079,6 +10079,9 @@ span.item-image:before {
 .item > .icon-top {
   align-items: flex-start;
   padding-top: 16px; }
+
+ion-content > .item {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
 
 drawer .item-icon-left .icon, .menu-left .item-icon-left .icon {
   left: 15px; }

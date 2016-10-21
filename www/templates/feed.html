@@ -3,17 +3,17 @@
   	<div ng-if="vm.showMe">
 	    <div class="list card no-margin-horizontal" ng-repeat="post in vm.posts | limitTo: vm.postsLength track by post.id" ng-class="{'no-margin-top': $index === 0}">
 			  <div class="item item-avatar item-text-center item-divider item-borderless" ion-affix data-affix-within-parent-with-class="card">
-			    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/emirik/73.jpg">
-			    {{::post.blog_name}} {{$index}}
+			    <img ng-src="{{::post.user.profile_picture}}">
+			    {{::post.user.full_name}}
 			  </div>
-			  <div class="item item-image" ng-repeat="photo in ::post.photos track by $index">
-			    <img ng-src="{{::photo.alt_sizes[2].url}}" width="100%" height="auto">
+			  <div class="item item-image">
+			    <img ng-src="{{::post.images.low_resolution.url}}" width="100%" height="auto">
 			  </div>
 			  <div class="item item-text-wrap item-borderless" ng-if="post.caption">
-			  	<div ng-bind-html="::post.caption" ng-cloak></div>
+			  	<div ng-bind-html="::post.caption.text" ng-cloak></div>
 			  </div>
 			  <div class="item item-text-center" style="justify-content:space-between">
-			  	<a class="subdued">{{::post.note_count}} notas</a>
+			  	<a class="subdued">{{::post.comments.count}} notas</a>
 			  	<a class="subdued button button-icon icon ion-ios-heart-outline"></a>
 			  </div>
 			</div>

@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $logProvider, $compileProvider, $animateProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $logProvider, $compileProvider, $animateProvider, $httpProvider) {
 
   // if in production
   if (true) {
@@ -35,8 +35,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic.contrib.drawer
 
   $animateProvider.classNameFilter(/\banimated\b/);
 
-  // natively comes activated
   $ionicConfigProvider.scrolling.jsScrolling(false);
+
+  $ionicConfigProvider.views.transition('none');
 
   $stateProvider
     .state('app', {
